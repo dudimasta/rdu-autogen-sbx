@@ -1,6 +1,8 @@
 # rdu-autogen-sbx
 
-Sandbox do poznawania frameworku autogen
+Sandbox do poznawania frameworku autogen.
+Skrytpy odpalane są w środowisku windows. 
+Żeby nie zanieczyszczać hosta, proponuję uruchamiać je na maszynie wirtualnej z windowsem 11
 
 Na początku upewnij się, że masz separowane środowiska, użyj conda
  - https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe 
@@ -76,7 +78,7 @@ Na początku upewnij się, że masz separowane środowiska, użyj conda
     conda env config vars set autogen_api_type=azure
     conda env config vars set autogen_api_version=2024-02-15-preview
     ```
-    - zmienne środowiskowe są przechowywane w pliku
+  - zmienne środowiskowe są przechowywane w pliku (możesz edytować je tam bezpośrednio, jeśli potrzebujesz)
     ```
     [...]\envs\rdu-autogen-sbx\conda-meta\state
     ```
