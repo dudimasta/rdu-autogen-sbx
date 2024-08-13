@@ -109,7 +109,7 @@ if __name__ == "__main__":
                 cog_search,
                 # message="Search for 'What's new in D365 Finance release 40?' in the 'vector-1721723417068' index",
                 #message="Search for 'What's new in most recent release of D365 Finance?' in the 'vector-1721723417068' index",
-                message="Search for 'What is the most recent release of D365 Finance?' in the 'vector-1721723417068' index",
+                message=f"Search for 'What is the most recent release of D365 Finance?' in the {AZURE_SEARCH_INDEX} index",
                 # message="Search for 'What's new in D365 Finance?' in the 'vector-1721723417068' index",
                 cache=cache,
             )
