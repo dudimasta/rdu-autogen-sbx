@@ -54,6 +54,23 @@ Na początku upewnij się, że masz separowane środowiska, użyj conda
   - install
     ```bash
     pip install pyautogen
+    #
+    # Install Azure CLI
+    pip install azure-cli
+    # RAG retrieve
+    pip install "pyautogen[retrievechat]"
+    pip install pyautogen azure-search-documents azure-identity
+    pip install pyautogen
+    pip install python-dotenv
+    pip install pyautogen[graph]
+    pip install azure-search-documents
+    pip install azure-identity
+    #
+    #Install unstructured in ubuntu
+    sudo apt-get update
+    sudo apt-get install -y tesseract-ocr poppler-utils
+    pip install unstructured[all-docs]
+
     ```
 
 7. **Dodaj zmienne środowiskowe**:

@@ -1,3 +1,4 @@
 cache.db
 coding/*
 src/coding/*
+.env
