@@ -9,7 +9,7 @@ from typing import Dict, List, cast
 
 service_endpoint = "https://lazarus-frc.search.windows.net"
 index_name = "vector-1721723417068"
-key = "x4c2CF3DoBDoiJibTJS9mSGt4OB3VcZlGE5HOKfem9AzSeCPVztv"
+key = "[YOUR-KEY-GOES-HERE]"
 
 search_client = SearchClient(service_endpoint, index_name, AzureKeyCredential(key))
 
