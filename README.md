@@ -9,6 +9,7 @@ Na początku upewnij się, że masz separowane środowiska, użyj conda
  - dodaj conda do zmiennych środowiskowych, np.: 
    - C:\ProgramData\miniconda3\Scripts
    - C:\ProgramData\miniconda3
+- masz uruchomiony silnik dockera
 
 
 1. **Install Anaconda or Miniconda**:
@@ -99,3 +100,22 @@ Na początku upewnij się, że masz separowane środowiska, użyj conda
     ```
     [...]\envs\rdu-autogen-sbx\conda-meta\state
     ```
+
+# Autogen Studio
+- Uruchomić menu start > Anaconda Prompt
+- Otworzy się terminal, w którym wykonać następujące polecenia:
+  - conda create -n autogenstudio python=3.11
+  - conda activate autogenstudio
+  - pip install autogenstudio
+- Można zamknąć konsolę
+- Uruchomienie (np. po przyjściu do pracy albo restarcie kompa)
+- Uruchomić menu start > Anaconda Prompt
+- W terminalu anacondy uruchomić:
+  - conda activate autogenstudio
+  - autogenstudio ui
+  - uruchomić przeglądarkę i otworzyć adres: http://127.0.0.1:8081 
+
+
+# Refs
+- https://microsoft.github.io/autogen/
+- https://microsoft.github.io/autogen/docs/autogen-studio

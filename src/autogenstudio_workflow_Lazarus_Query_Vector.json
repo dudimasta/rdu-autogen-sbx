@@ -1,0 +1,107 @@
+{
+    "version": "0.0.1",
+    "name": "Lazarus Query Vector",
+    "type": "autonomous",
+    "summary_method": "llm",
+    "user_id": "guestuser@gmail.com",
+    "description": "Autonomous Workflow",
+    "sample_tasks": [],
+    "agents": [
+        {
+            "agent": {
+                "version": "0.0.1",
+                "type": "userproxy",
+                "config": {
+                    "name": "laz_cog_user_proxy",
+                    "human_input_mode": "NEVER",
+                    "description": "User Proxy",
+                    "max_consecutive_auto_reply": 25,
+                    "system_message": "You are a helpful assistant.",
+                    "default_auto_reply": "TERMINATE",
+                    "llm_config": false,
+                    "code_execution_config": "local"
+                },
+                "task_instruction": null,
+                "user_id": "guestuser@gmail.com",
+                "skills": [],
+                "models": [
+                    {
+                        "user_id": "guestuser@gmail.com",
+                        "model": "gpt-4-turbo090424",
+                        "api_type": "azure",
+                        "api_version": "2024-02-15-preview",
+                        "version": "0.0.1",
+                        "base_url": "https://lazarus-swc.openai.azure.com/",
+                        "description": "Rdu: model used by lazarus 3"
+                    }
+                ],
+                "agents": []
+            },
+            "link": {
+                "sequence_id": 0,
+                "workflow_id": 7,
+                "agent_id": 34,
+                "agent_type": "sender"
+            }
+        },
+        {
+            "agent": {
+                "version": "0.0.1",
+                "type": "assistant",
+                "config": {
+                    "name": "laz_cog_search",
+                    "description": "Primary Assistant",
+                    "llm_config": {
+                        "config_list": [
+                            {
+                                "model": "gpt-4-turbo090424",
+                                "api_type": "azure",
+                                "api_version": "2024-02-15-preview",
+                                "version": "0.0.1",
+                                "base_url": "https://lazarus-swc.openai.azure.com/"
+                            }
+                        ],
+                        "temperature": 0.1,
+                        "timeout": 600,
+                        "cache_seed": null,
+                        "max_tokens": 4000
+                    },
+                    "human_input_mode": "NEVER",
+                    "max_consecutive_auto_reply": 25,
+                    "code_execution_config": "local",
+                    "system_message": "You are a helpful AI assistant. Solve tasks using your coding and language skills. In the following cases, suggest python code (in a python coding block) or shell script (in a sh coding block) for the user to execute. 1. When you need to collect info, use the code to output the info you need, for example, browse or search the web, download/read a file, print the content of a webpage or a file, get the current date/time, check the operating system. After sufficient info is printed and the task is ready to be solved based on your language skill, you can solve the task by yourself. 2. When you need to perform some task with code, use the code to perform the task and output the result. Finish the task smartly. Solve the task step by step if you need to. If a plan is not provided, explain your plan first. Be clear which step uses code, and which step uses your language skill. When using code, you must indicate the script type in the code block. The user cannot provide any other feedback or perform any other action beyond executing the code you suggest. The user can't modify your code. So do not suggest incomplete code which requires users to modify. Don't use a code block if it's not intended to be executed by the user. If you want the user to save the code in a file before executing it, put # filename: <filename> inside the code block as the first line. Don't include multiple code blocks in one response. Do not ask users to copy and paste the result. Instead, use 'print' function for the output when relevant. Check the execution result returned by the user. If the result indicates there is an error, fix the error and output the code again. Suggest the full code instead of partial code or code changes. If the error can't be fixed or if the task is not solved even after the code is executed successfully, analyze the problem, revisit your assumption, collect additional info you need, and think of a different approach to try. When you find an answer, verify the answer carefully. Include verifiable evidence in your response if possible. Reply 'TERMINATE' in the end when everything is done."
+                },
+                "task_instruction": null,
+                "user_id": "guestuser@gmail.com",
+                "skills": [
+                    {
+                        "user_id": "guestuser@gmail.com",
+                        "version": "0.0.1",
+                        "name": "search_in_vector",
+                        "content": "def search_in_vector(query: str):\n    import json\n    from azure.search.documents import SearchClient\n    import os\n    from azure.identity import DefaultAzureCredential\n    from azure.core.credentials import AzureKeyCredential\n    from azure.identity import AzureCliCredential\n    from dotenv import load_dotenv\n\n    # zmienne dot. konfuguracji AZ Search z pliku .env są ładowane do sesji\n    load_dotenv()\n\n    AZURE_SEARCH_INDEX = os.getenv(\"AZURE_SEARCH_INDEX\")\n    AZURE_SEARCH_KEY = os.getenv(\"AZURE_SEARCH_KEY\")\n    AZURE_SEARCH_SEMANTIC_SEARCH_CONFIG = os.getenv(\"AZURE_SEARCH_SEMANTIC_SEARCH_CONFIG\")\n    AZURE_SEARCH_SERVICE_ENDPOINT = os.getenv(\"AZURE_SEARCH_SERVICE_ENDPOINT\")\n    endpoint = AZURE_SEARCH_SERVICE_ENDPOINT\n\n    client = SearchClient(AZURE_SEARCH_SERVICE_ENDPOINT, AZURE_SEARCH_INDEX, AzureKeyCredential(AZURE_SEARCH_KEY))\n    payload = json.dumps(\n        {\n            \"search\": query,\n            # below is vector query: https://learn.microsoft.com/en-us/python/api/azure-search-documents/azure.search.documents.models.vectorquery?view=azure-python\n            \"vectorQueries\": [{\"kind\": \"text\", \"text\": query, \"k\": 5, \"fields\": \"vector\"}],\n            \"queryType\": \"semantic\",\n            \"semanticConfiguration\": AZURE_SEARCH_SEMANTIC_SEARCH_CONFIG,\n            \"captions\": \"extractive\",\n            \"answers\": \"extractive|count-3\",\n            \"queryLanguage\": \"en-US\",\n        }\n    )\n\n    response = list(client.search(payload))\n\n    output = []\n    __i = 20\n    for result in response:\n        __i = __i - 1\n        if __i < 0:\n            break\n        result.pop(\"text_vector\")\n        output.append(result)\n    return output",
+                        "description": "Performs a Cognitive search in index vector-1721723417068",
+                        "libraries": []
+                    }
+                ],
+                "models": [
+                    {
+                        "user_id": "guestuser@gmail.com",
+                        "model": "gpt-4-turbo090424",
+                        "api_type": "azure",
+                        "api_version": "2024-02-15-preview",
+                        "version": "0.0.1",
+                        "base_url": "https://lazarus-swc.openai.azure.com/",
+                        "description": "Rdu: model used by lazarus 3"
+                    }
+                ],
+                "agents": []
+            },
+            "link": {
+                "sequence_id": 0,
+                "workflow_id": 7,
+                "agent_id": 35,
+                "agent_type": "receiver"
+            }
+        }
+    ]
+}
