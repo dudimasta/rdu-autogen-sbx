@@ -54,16 +54,16 @@ Na początku upewnij się, że masz separowane środowiska, użyj conda
      ```
   - install
     ```bash
-    pip install pyautogen
+    pip install ag2
     #
     # Install Azure CLI
     pip install azure-cli
     # RAG retrieve
-    pip install "pyautogen[retrievechat]"
-    pip install pyautogen azure-search-documents azure-identity
-    pip install pyautogen
+    pip install "ag2[retrievechat]"
+    pip install ag2 azure-search-documents azure-identity
+    pip install ag2
     pip install python-dotenv
-    pip install pyautogen[graph]
+    pip install ag2[graph]
     pip install azure-search-documents
     pip install azure-identity
     #
